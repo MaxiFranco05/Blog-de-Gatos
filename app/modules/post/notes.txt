@@ -1,0 +1,8 @@
+posts/
+X GET todos los posts 
+ POST crear un post 
+
+posts/<slug>
+X GET detalle de un post
+DELETE borrar el post
+PUT actualizar un post
