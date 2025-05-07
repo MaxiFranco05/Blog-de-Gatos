@@ -7,11 +7,11 @@ router = APIRouter(
     prefix="/posts", tags=["Post"]
 )
 
-@router.get("/")
+@router.get("/", response_model=list[PostSchema])
 def get_all_posts():
     with SessionLocal() as db:
             posts =  db.query(Post).all()
-    return {"results": posts}
+    return posts
 
 @router.get("/{id}")
 def get_a_post(id: int):
