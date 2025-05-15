@@ -5,7 +5,7 @@ import os
 
 env = os.environ
 usuario = env.get("user")
-contraseña = env.get("pass")
+contraseña = env.get("pswrd")
 host = env.get("host")
 puerto = env.get("port")
 db = env.get("db")
