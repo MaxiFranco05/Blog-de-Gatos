@@ -7,7 +7,7 @@ env = os.environ
 usuario = env.get("user")
 contraseña = env.get("pswrd")
 host = env.get("host")
-puerto = env.get("port")
+puerto = env.get("puerto")
 db = env.get("db")
 
 DATABASE_URL = f"postgresql://{usuario}:{contraseña}@{host}:{puerto}/{db}"
