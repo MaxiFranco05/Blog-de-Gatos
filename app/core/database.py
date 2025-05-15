@@ -10,7 +10,7 @@ host = env.get("host")
 puerto = env.get("port")
 db = env.get("db")
 
-DATABASE_URL = "postgresql://{usuario}:{contraseña}@{host}:{puerto}/{db}"
+DATABASE_URL = f"postgresql://{usuario}:{contraseña}@{host}:{puerto}/{db}"
 
 engine = create_engine(DATABASE_URL)
 
