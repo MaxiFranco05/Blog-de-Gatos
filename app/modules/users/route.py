@@ -21,7 +21,7 @@ def get_a_user(id: int):
         user = db.query(User).filter(User.id == id).first()
         if not user:
             raise HTTPException(status_code=404, detail="Usuario no encontrado.")
-    return {f"Usuario #{id}": user}
+    return user
 
 @router.post("/signup", response_model=UserSchema)
 def new_user(user: NewUser):
