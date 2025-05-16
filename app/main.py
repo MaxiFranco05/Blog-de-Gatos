@@ -22,7 +22,7 @@ app = FastAPI(title="Blog de Gatos",description="API para manejar un blog con Fa
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://127.0.0.1:5500"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
