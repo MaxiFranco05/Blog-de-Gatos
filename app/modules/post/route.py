@@ -13,31 +13,34 @@ router = APIRouter(
 #             posts =  db.query(Post).all()
 #     return posts
 
-@router.get("/")
+@router.get("/", response_model=list)
 def get_posts(page: int = Query(1, ge=1)):
-    items= page * 10
+    limit = 10
+    offset = (page - 1) * limit
+    posts_list = []
     with SessionLocal() as db:
-            for i in range(items - 10, items):
-                post = db.query(Post).order_by(Post.created_at.desc()).offset(i).first()
-                if not post:
-                    raise HTTPException(status_code=404, detail=f"Post #{i} no encontrado.")
-                user = db.query(User).filter(User.id == post.author_id).first()
-                if not user:
-                    raise HTTPException(status_code=404, detail=f"Usuario #{post.author_id} no encontrado.")
-                result = {
-                    "id": post.id,
-                    "title": post.title,
-                    "content": post.content,
-                    "author_id": post.author_id,
-                    "created_at": post.created_at,
-                    "last_update": post.last_update,
-                    "author": {
-                        "id": user.id,
-                        "username": user.username,
-                        "profile_pic": user.profile_pic
-                    }
+        posts = db.query(Post).order_by(Post.created_at.desc()).offset(offset).limit(page_size).all()
+        for post in posts:
+            user = db.query(User).filter(User.id == post.author_id).first()
+            if not user:
+                continue
+            result = {
+                "id": post.id,
+                "title": post.title,
+                "content": post.content,
+                "author_id": post.author_id,
+                "created_at": post.created_at,
+                "last_update": post.last_update,
+                "img": post.img,
+                "author": {
+                    "id": user.id,
+                    "username": user.username,
+                    "profile_pic": user.profile_pic
                 }
-    return result
+            }
+            posts_list.append(result)
+    return posts_list
+
 @router.get("/{id}")
 def get_a_item(id: int):
     with SessionLocal() as db:
