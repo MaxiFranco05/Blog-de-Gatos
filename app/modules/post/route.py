@@ -15,8 +15,8 @@ router = APIRouter(
 
 @router.get("/", response_model=list)
 def get_posts(page: int = Query(1, ge=1)):
-    limit = 10
-    offset = (page - 1) * limit
+    page_size = 10
+    offset = (page - 1) * page_size
     posts_list = []
     with SessionLocal() as db:
         posts = db.query(Post).order_by(Post.created_at.desc()).offset(offset).limit(page_size).all()
