@@ -51,7 +51,7 @@ def new_post(post: NewPost):
     with SessionLocal() as db:
         if not db.query(User).filter(User.id == post.author_id).first():
              raise HTTPException(status_code=404, detail="Usuario no encontrado.")
-        img = post.profile_pic if hasattr(post, "profile_pic") and post.profile_pic else f"https://ui-avatars.com/api/?background=random&name={post.replace(' ', '-')}"
+        img = post.profile_pic if hasattr(post, "profile_pic") and post.profile_pic else f"https://ui-avatars.com/api/?background=random&name={post.title.replace(' ', '-')}
         new_post = Post(title=post.title, content=post.content, author_id=post.author_id, img=img)
         db.add(new_post)
         db.commit()
