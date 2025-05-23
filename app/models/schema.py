@@ -13,6 +13,7 @@ class User(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String(50), unique=True, nullable=False)
+    bio = Column(Text, nullable=True)
     profile_pic = Column(String(255), nullable=True)
     email = Column(String(100), unique=True, nullable=False)
     password = Column(String(255), nullable=False)
@@ -27,6 +28,7 @@ class Post(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(255), nullable=False)
     content = Column(Text, nullable=False)
+    img = Column(String(255), nullable=True)
     author_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"))
     created_at = Column(DateTime, default=func.now())
     last_update = Column(DateTime, default=func.now())
