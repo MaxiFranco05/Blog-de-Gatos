@@ -49,11 +49,10 @@ def get_a_item(id: int):
 @router.post("/new", response_model=PostSchema)
 def new_post(post: NewPost):
     with SessionLocal() as db:
-
         if not db.query(User).filter(User.id == post.author_id).first():
              raise HTTPException(status_code=404, detail="Usuario no encontrado.")
-        
-        new_post = Post(title=post.title, content=post.content, author_id=post.author_id)
+        img = post.profile_pic if hasattr(post, "profile_pic") and post.profile_pic else f"https://ui-avatars.com/api/?background=random&name={post.replace(' ', '-')}"
+        new_post = Post(title=post.title, content=post.content, author_id=post.author_id, img=img)
         db.add(new_post)
         db.commit()
         db.refresh(new_post)
@@ -81,4 +80,4 @@ def update_post(id: int, post_updt: NewPost):
           post.last_update = func.now()
           db.commit()
           db.refresh(post)
-          return {"result": f"Post #{id} actualizado.", "post": post}
+          return post
