@@ -4,6 +4,7 @@ from pydantic import BaseModel
 from app.core.database import Base
 from datetime import datetime
 from typing import List, Optional
+import random
 
 ### BASE SCHEMAS
 
@@ -12,6 +13,7 @@ class User(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String(50), unique=True, nullable=False)
+    profile_pic = Column(String(255), nullable=True)
     email = Column(String(100), unique=True, nullable=False)
     password = Column(String(255), nullable=False)
     created_at = Column(DateTime, default=func.now())

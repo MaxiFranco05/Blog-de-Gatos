@@ -30,7 +30,8 @@ def new_user(user: NewUser):
         if existing_user:
             raise HTTPException(status_code=409, detail="El nombre de usuario o correo ya está en uso.")
         pass_hash = hash_pswrd(user.password)
-        new_user = User(username= user.username, email= user.email, password= pass_hash)
+        profile_pic = user.profile_pic if hasattr(user, "profile_pic") and user.profile_pic else f"https://api.dicebear.com/9.x/micah/svg?seed={user.username}&backgroundType=gradientLinear&facialHairProbability=25&backgroundColor=ffdfbf,ffd5dc,d1d4f9,c0aede,b6e3f4"
+        new_user = User(username= user.username, email= user.email, password= pass_hash, profile_pic=profile_pic)
         db.add(new_user)
         db.commit()
         db.refresh(new_user)
